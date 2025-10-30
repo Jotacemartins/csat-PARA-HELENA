@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pesquisa de Satisfação - Setabot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .nota-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .nota-card {
+            flex: 1 1 calc(20% - 10px);
+            background: #e9eef2;
+            border-radius: 8px;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nota-card input {
+            display: none;
+        }
+
+        .nota-card span {
+            display: block;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .nota-card small {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .nota-card:hover {
+            background-color: #d0e2f2;
+        }
+
+        .nota-card input:checked+span {
+            font-weight: bold;
+            color: #0078d4;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        .success {
+            text-align: center;
+            color: green;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .nota-card {
+                flex: 1 1 45%;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            button {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Pesquisa de Satisfação</h2>
+
+        <form id="csatForm">
+            <input type="hidden" name="sessionId" id="sessionId" />
+            <input type="hidden" name="empresa" id="empresa" />
+            <input type="hidden" name="telefone" id="telefone" />
+            <input type="hidden" name="atendente" id="atendente" />
+
+            <label for="solucao">O problema que motivou o contato foi solucionado?</label>
+            <select name="solucao" id="solucao" required>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+
+            <label>Qual é o seu nível de satisfação com o atendimento recebido?</label>
+            <div class="nota-grid">
+                <label class="nota-card"><input type="radio" name="satisfacao" value="1"
+                        required /><span>1<br><small></small></span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao"
+                        value="2" /><span>2<br><small></small></span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao"
+                        value="3" /><span>3<br><small></small></span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao"
+                        value="4" /><span>4<br><small></small></span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao"
+                        value="5" /><span>5<br><small></small></span></label>
+            </div>
+
+            <label>
+                <input type="checkbox" id="autorizo" name="autorizo" required />
+                Autorizo que meus dados sejam utilizados para fins de contato e melhoria do atendimento.
+            </label>
+
+            <div id="followUp" class="hidden">
+                <label>Sentimos muito que sua experiência não tenha sido satisfatória. Podemos entrar em contato para
+                    entender melhor?</label>
+                <select id="contatoAutorizado" name="contatoAutorizado">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+
+                <div id="contatoInfo" class="hidden">
+                    <label for="contatoNome">Com quem podemos entrar em contato?</label>
+                    <input type="text" name="contatoNome" id="contatoNome" />
+                </div>
+            </div>
+
+            <label for="comentario">Você quer deixar algum comentário, sugestão ou elogio?</label>
+            <textarea name="comentario" id="comentario" rows="4"></textarea>
+
+            <button type="submit" id="submitBtn">Enviar</button>
+            <div class="success" id="successMsg">Obrigado pela sua resposta! ✅</div>
+        </form>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawSessionId = urlParams.get('sessionId');
+            const fullSessionLink = rawSessionId
+                ? `https://web-staging.helena.run/chat2/sessions/${rawSessionId}`
+                : '';
+            document.getElementById('sessionId').value = fullSessionLink;
+            document.getElementById('empresa').value = urlParams.get('empresa') || '';
+            document.getElementById('telefone').value = urlParams.get('telefone') || '';
+            document.getElementById('atendente').value = urlParams.get('atendente') || '';
+
+            const followUp = document.getElementById('followUp');
+            const contatoAutorizado = document.getElementById('contatoAutorizado');
+            const contatoInfo = document.getElementById('contatoInfo');
+            const contatoNomeInput = document.getElementById('contatoNome');
+            const submitButton = document.getElementById('submitBtn');
+
+            const notaRadios = document.querySelectorAll('input[name="satisfacao"]');
+            notaRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const val = parseInt(radio.value);
+                    if (val >= 1 && val <= 3) {
+                        followUp.classList.remove('hidden');
+                    } else {
+                        followUp.classList.add('hidden');
+                        contatoInfo.classList.add('hidden');
+                        contatoAutorizado.value = "";
+                        contatoNomeInput.value = "";
+                        contatoNomeInput.required = false;
+                    }
+                });
+            });
+
+            contatoAutorizado.addEventListener('change', () => {
+                const autorizo = document.getElementById('autorizo').checked;
+                if (contatoAutorizado.value === 'Sim' && autorizo) {
+                    contatoInfo.classList.remove('hidden');
+                    contatoNomeInput.required = true;
+                } else {
+                    contatoInfo.classList.add('hidden');
+                    contatoNomeInput.required = false;
+                }
+            });
+
+            document.getElementById('csatForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                submitButton.disabled = true;
+
+                const formData = new FormData(this);
+                fetch('https://script.google.com/macros/s/AKfycbzeCYZU7ZDdUMa8kxESZaw09QZ3lpRIi2pejZijR75tp6METqHEGkYmqO5IavjrmAsS/exec', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            document.getElementById('successMsg').style.display = 'block';
+                            this.reset();
+                            followUp.classList.add('hidden');
+                            contatoInfo.classList.add('hidden');
+                            contatoNomeInput.required = false;
+                        } else {
+                            alert('Erro ao enviar. Tente novamente.');
+                        }
+                        submitButton.disabled = false;
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Erro de conexão. Verifique sua internet e tente novamente.');
+                        submitButton.disabled = false;
+                    });
+            });
+
+               });
+    </script>
+</body>
+</html>
