@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Pesquisa de Satisfação - Setabot</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #f4f6f8;
@@ -20,7 +16,6 @@
             align-items: center;
             min-height: 100vh;
         }
-
         .container {
             background: #fff;
             padding: 30px;
@@ -29,14 +24,12 @@
             max-width: 500px;
             width: 100%;
         }
-
         h2 {
             margin-bottom: 20px;
             color: #333;
             text-align: center;
             font-size: 1.5rem;
         }
-
         label {
             display: block;
             margin-top: 15px;
@@ -44,7 +37,6 @@
             color: #444;
             font-size: 0.95rem;
         }
-
         input[type="text"],
         select,
         textarea {
@@ -56,11 +48,7 @@
             font-size: 14px;
             background-color: #f9f9f9;
         }
-
-        textarea {
-            resize: vertical;
-        }
-
+        textarea { resize: vertical; }
         .nota-grid {
             display: flex;
             flex-wrap: wrap;
@@ -68,7 +56,6 @@
             margin-top: 10px;
             gap: 10px;
         }
-
         .nota-card {
             flex: 1 1 calc(20% - 10px);
             background: #e9eef2;
@@ -79,31 +66,21 @@
             border: 2px solid transparent;
             transition: all 0.2s ease;
         }
-
-        .nota-card input {
-            display: none;
-        }
-
+        .nota-card input { display: none; }
         .nota-card span {
             display: block;
             font-size: 16px;
             color: #333;
         }
-
         .nota-card small {
             font-size: 12px;
             color: #666;
         }
-
-        .nota-card:hover {
-            background-color: #d0e2f2;
-        }
-
+        .nota-card:hover { background-color: #d0e2f2; }
         .nota-card input:checked+span {
             font-weight: bold;
             color: #0078d4;
         }
-
         button {
             margin-top: 20px;
             width: 100%;
@@ -116,42 +93,24 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
-        button:hover {
-            background-color: #005fa3;
-        }
-
+        button:hover { background-color: #005fa3; }
         .success {
             text-align: center;
             color: green;
             margin-top: 20px;
             display: none;
         }
-
-        .hidden {
-            display: none;
-        }
-
+        .hidden { display: none; }
         @media (max-width: 480px) {
-            .nota-card {
-                flex: 1 1 45%;
-            }
-
-            h2 {
-                font-size: 1.3rem;
-            }
-
-            button {
-                font-size: 15px;
-            }
+            .nota-card { flex: 1 1 45%; }
+            h2 { font-size: 1.3rem; }
+            button { font-size: 15px; }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h2>Pesquisa de Satisfação</h2>
-
         <form id="csatForm">
             <input type="hidden" name="sessionId" id="sessionId" />
             <input type="hidden" name="empresa" id="empresa" />
@@ -167,26 +126,15 @@
 
             <label>Qual é o seu nível de satisfação com o atendimento recebido?</label>
             <div class="nota-grid">
-                <label class="nota-card"><input type="radio" name="satisfacao" value="1"
-                        required /><span>1<br><small></small></span></label>
-                <label class="nota-card"><input type="radio" name="satisfacao"
-                        value="2" /><span>2<br><small></small></span></label>
-                <label class="nota-card"><input type="radio" name="satisfacao"
-                        value="3" /><span>3<br><small></small></span></label>
-                <label class="nota-card"><input type="radio" name="satisfacao"
-                        value="4" /><span>4<br><small></small></span></label>
-                <label class="nota-card"><input type="radio" name="satisfacao"
-                        value="5" /><span>5<br><small></small></span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao" value="1" required /><span>1</span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao" value="2" /><span>2</span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao" value="3" /><span>3</span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao" value="4" /><span>4</span></label>
+                <label class="nota-card"><input type="radio" name="satisfacao" value="5" /><span>5</span></label>
             </div>
 
-            <label>
-                <input type="checkbox" id="autorizo" name="autorizo" required />
-                Autorizo que meus dados sejam utilizados para fins de contato e melhoria do atendimento.
-            </label>
-
             <div id="followUp" class="hidden">
-                <label>Sentimos muito que sua experiência não tenha sido satisfatória. Podemos entrar em contato para
-                    entender melhor?</label>
+                <label>Sentimos muito que sua experiência não tenha sido satisfatória. Podemos entrar em contato para entender melhor?</label>
                 <select id="contatoAutorizado" name="contatoAutorizado">
                     <option value="">Selecione</option>
                     <option value="Sim">Sim</option>
@@ -203,6 +151,12 @@
             <textarea name="comentario" id="comentario" rows="4"></textarea>
 
             <button type="submit" id="submitBtn">Enviar</button>
+
+            <label style="display:block; margin-top:15px;">
+                <input type="checkbox" id="autorizo" name="autorizo" required checked />
+                Autorizo que meus dados sejam utilizados para fins de contato e melhoria do atendimento.
+            </label>
+
             <div class="success" id="successMsg">Obrigado pela sua resposta! ✅</div>
         </form>
     </div>
@@ -257,30 +211,30 @@
                 submitButton.disabled = true;
 
                 const formData = new FormData(this);
+
                 fetch('https://script.google.com/macros/s/AKfycbzeCYZU7ZDdUMa8kxESZaw09QZ3lpRIi2pejZijR75tp6METqHEGkYmqO5IavjrmAsS/exec', {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            document.getElementById('successMsg').style.display = 'block';
-                            this.reset();
-                            followUp.classList.add('hidden');
-                            contatoInfo.classList.add('hidden');
-                            contatoNomeInput.required = false;
-                        } else {
-                            alert('Erro ao enviar. Tente novamente.');
-                        }
-                        submitButton.disabled = false;
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert('Erro de conexão. Verifique sua internet e tente novamente.');
-                        submitButton.disabled = false;
-                    });
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('successMsg').style.display = 'block';
+                        this.reset();
+                        followUp.classList.add('hidden');
+                        contatoInfo.classList.add('hidden');
+                        contatoNomeInput.required = false;
+                    } else {
+                        alert('Erro ao enviar. Tente novamente.');
+                    }
+                    submitButton.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro de conexão. Verifique sua internet e tente novamente.');
+                    submitButton.disabled = false;
+                });
             });
-
-               });
+        });
     </script>
 </body>
 </html>
