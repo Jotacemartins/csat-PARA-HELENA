@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>Pesquisa de Satisfação - HelenaCRM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
   <style>
     :root {
       --helena-green: #00c16a;
@@ -39,9 +41,19 @@
       transition: all 0.3s ease;
     }
 
+    .logo-wrapper {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      max-width: 120px;
+      height: auto;
+    }
+
     h2 {
       text-align: center;
-      font-size: 1.8rem;
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
       color: var(--helena-dark);
       margin-bottom: 20px;
     }
@@ -126,8 +138,8 @@
       background-color: var(--helena-green);
       color: white;
       border: none;
-      border-radius: 999px; /* pill style */
-      font-size: 16px;
+      border-radius: 999px;
+      font-size: clamp(0.9rem, 1vw, 1rem);
       font-weight: 600;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
@@ -149,6 +161,12 @@
       margin-top: 20px;
       font-weight: 600;
       display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hidden {
@@ -160,29 +178,31 @@
       margin-right: 6px;
     }
 
+    form > *:not(:last-child) {
+      margin-bottom: 16px;
+    }
+
     @media (max-width: 480px) {
       .container {
         padding: 25px 20px;
       }
 
-      h2 {
-        font-size: 1.4rem;
-      }
-
       .nota-card {
-        flex: 1 1 30%;
+        flex: 1 1 45%;
         padding: 12px 0;
-      }
-
-      button {
-        font-size: 15px;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
+    <div class="logo-wrapper">
+      <img src="helenex.jpg" alt="Logo HelenaCRM" class="logo" />
+    </div>
+
     <h2>Pesquisa de Satisfação</h2>
+
     <form id="csatForm">
       <input type="hidden" name="sessionId" id="sessionId" />
       <input type="hidden" name="empresa" id="empresa" />
@@ -228,7 +248,6 @@
       </label>
 
       <button type="submit" id="submitBtn">Enviar</button>
-
       <div class="success" id="successMsg">Obrigado pela sua resposta! ✅</div>
     </form>
   </div>
@@ -240,6 +259,8 @@
       const fullSessionLink = rawSessionId
         ? `https://web-staging.helena.run/chat2/sessions/${rawSessionId}`
         : '';
+
+      // Corrigido: linha estava quebrada
       document.getElementById('sessionId').value = fullSessionLink;
       document.getElementById('empresa').value = urlParams.get('empresa') || '';
       document.getElementById('telefone').value = urlParams.get('telefone') || '';
@@ -251,6 +272,7 @@
       const contatoNomeInput = document.getElementById('contatoNome');
       const submitButton = document.getElementById('submitBtn');
 
+      // Mostrar follow-up se nota <= 3
       const notaRadios = document.querySelectorAll('input[name="satisfacao"]');
       notaRadios.forEach(radio => {
         radio.addEventListener('change', () => {
