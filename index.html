@@ -17,28 +17,36 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: #fff;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden; /* 🔹 Impede rolagem lateral */
+      color: var(--helena-dark);
     }
 
     body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
       min-height: 100vh;
-      color: var(--helena-dark);
     }
 
     .container {
       background: #fff;
-      padding: 40px 30px;
+      padding: 35px 25px;
       border-radius: 20px;
       box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
       width: 100%;
-      max-width: 520px;
+      max-width: 480px; /* 🔹 Ajuste para caber perfeitamente em mobile */
       transition: all 0.3s ease;
+      overflow: hidden;
     }
 
     .logo-wrapper {
@@ -47,20 +55,20 @@
     }
 
     .logo {
-      max-width: 120px;
+      max-width: 100px;
       height: auto;
     }
 
     h2 {
       text-align: center;
-      font-size: clamp(1.4rem, 2vw, 1.8rem);
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
       color: var(--helena-dark);
       margin-bottom: 20px;
     }
 
     label {
       display: block;
-      margin-top: 18px;
+      margin-top: 16px;
       font-weight: 600;
       color: var(--helena-dark);
       font-size: 0.95rem;
@@ -95,8 +103,8 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 12px;
       gap: 10px;
+      margin-top: 12px;
     }
 
     .nota-card {
@@ -182,14 +190,29 @@
       margin-bottom: 16px;
     }
 
+    /* 🔹 Ajustes para telas pequenas */
     @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
       .container {
-        padding: 25px 20px;
+        padding: 25px 18px;
+        border-radius: 14px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
       }
 
       .nota-card {
-        flex: 1 1 45%;
-        padding: 12px 0;
+        flex: 1 1 28%; /* 3 por linha */
+        padding: 10px 0;
+      }
+
+      button {
+        padding: 12px;
+      }
+
+      textarea {
+        min-height: 80px;
       }
     }
   </style>
@@ -260,7 +283,6 @@
         ? `https://web-staging.helena.run/chat2/sessions/${rawSessionId}`
         : '';
 
-      // Corrigido: linha estava quebrada
       document.getElementById('sessionId').value = fullSessionLink;
       document.getElementById('empresa').value = urlParams.get('empresa') || '';
       document.getElementById('telefone').value = urlParams.get('telefone') || '';
@@ -272,7 +294,6 @@
       const contatoNomeInput = document.getElementById('contatoNome');
       const submitButton = document.getElementById('submitBtn');
 
-      // Mostrar follow-up se nota <= 3
       const notaRadios = document.querySelectorAll('input[name="satisfacao"]');
       notaRadios.forEach(radio => {
         radio.addEventListener('change', () => {
